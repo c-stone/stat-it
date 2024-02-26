@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 import Link from "next/link";
 import Image from "next/image";
+import { Toaster } from "~/components/ui/sonner";
 import logo from "../../public/images/logo.webp";
 
 const inter = Inter({
@@ -50,6 +51,7 @@ export default function RootLayout({
           <div className="w-full">
             <div>{children}</div>
           </div>
+          <Toaster />
         </div>
       </body>
     </html>
