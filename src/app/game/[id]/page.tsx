@@ -19,7 +19,7 @@ export default function Game({ params }: { params: { id: string } }) {
         <CardHeader>
           <CardTitle>Stonee</CardTitle>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="flex flex-col gap-4">
           <Counter name="HP" />
           <Counter name="MP" />
           <ConditionSelector />
