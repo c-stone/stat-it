@@ -1,18 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
-import Plus from "~/components/icons/Plus";
-import { Button } from "~/components/ui/button";
 
-import Counter from "~/components/Counter";
-import ConditionSelector from "~/components/ConditionSelector";
 import WidgetsCard from "~/components/WidgetsCard";
 
 export default function Game({ params }: { params: { id: string } }) {
