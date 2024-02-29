@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,26 +13,22 @@ import { Button } from "~/components/ui/button";
 
 import Counter from "~/components/Counter";
 import ConditionSelector from "~/components/ConditionSelector";
+import WidgetsCard from "~/components/WidgetsCard";
 
 export default function Game({ params }: { params: { id: string } }) {
+  const [counters, setCounters] = useState([
+    { name: "HP" },
+    { name: "XP" },
+    { name: "Gold" },
+  ]);
+  const [conditionSelectors, setConditionSelectors] = useState(["gloomhaven"]);
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c] p-10 text-white">
       <h1>Game {params.id}</h1>
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Stonee</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <Counter name="HP" />
-          <Counter name="MP" />
-          <ConditionSelector />
-        </CardContent>
-        <CardFooter className="flex justify-end">
-          <Button>
-            <Plus />
-          </Button>
-        </CardFooter>
-      </Card>
+      <WidgetsCard
+        counters={counters}
+        conditionSelectors={conditionSelectors}
+      />
     </main>
   );
 }

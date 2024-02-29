@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState } from "react";
 import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 
 import { Button } from "~/components/ui/button";
@@ -9,7 +9,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import XMark from "./icons/XMark";
@@ -24,7 +23,7 @@ type CheckboxOption = {
   disabled?: boolean;
 };
 
-const conditions: CheckboxOption[] = [
+const gloomhaveConditions: CheckboxOption[] = [
   { id: "bane", label: "Bane", checked: false },
   { id: "brittle", label: "Brittle", checked: false },
   { id: "disarm", label: "Disarm", checked: false },
@@ -40,10 +39,11 @@ const conditions: CheckboxOption[] = [
   { id: "wound", label: "Wound", checked: false },
 ];
 
-export default function DropdownMenuCheckboxes() {
+export default function ConditionSelector({ options }: { options: string }) {
   // Initial state for checkboxes
-  const [checkboxes, setCheckboxes] =
-    React.useState<CheckboxOption[]>(conditions);
+  const [checkboxes, setCheckboxes] = useState<CheckboxOption[]>(
+    options === "gloomhaven" ? gloomhaveConditions : [],
+  );
 
   // Function to handle checkbox change
   const handleCheckboxChange = (id: string, checked: Checked) => {
