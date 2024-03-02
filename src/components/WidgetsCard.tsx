@@ -33,11 +33,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
 export default function WidgetsCard() {
-  const [counters, setCounters] = useState<{ name: string }[]>([
-    { name: "HP" },
-    { name: "XP" },
-    { name: "Gold" },
-  ]);
+  const [counters, setCounters] = useState<{ name: string }[]>([]);
   const [conditionSelectors, setConditionSelectors] = useState<string[]>([]);
   const [newCounterName, setNewCounterName] = useState<string>("");
   const [newConditionSelector, setNewConditionSelector] = useState<string>("");
@@ -81,7 +77,16 @@ export default function WidgetsCard() {
           </div>
         ))}
         {conditionSelectors.map((selector, i) => (
-          <ConditionSelector key={`selector-${i}`} options={selector} />
+          <div key={`selector-${i}`} className="flex w-full items-end gap-1">
+            <ConditionSelector key={`selector-${i}`} options={selector} />
+            <Button
+              variant={"destructive"}
+              size={"icon"}
+              onClick={() => removeConditionSelector(selector)}
+            >
+              <XMark />
+            </Button>
+          </div>
         ))}
       </CardContent>
       <CardFooter className="flex justify-end">

@@ -39,10 +39,31 @@ const gloomhaveConditions: CheckboxOption[] = [
   { id: "wound", label: "Wound", checked: false },
 ];
 
+const dndConditions: CheckboxOption[] = [
+  { id: "blinded", label: "Blinded", checked: false },
+  { id: "charmed", label: "Charmed", checked: false },
+  { id: "deafened", label: "Deafened", checked: false },
+  { id: "frightened", label: "Frightened", checked: false },
+  { id: "grappled", label: "Grappled", checked: false },
+  { id: "incapacitated", label: "Incapacitated", checked: false },
+  { id: "invisible", label: "Invisible", checked: false },
+  { id: "paralyzed", label: "Paralyzed", checked: false },
+  { id: "petrified", label: "Petrified", checked: false },
+  { id: "poisoned", label: "Poisoned", checked: false },
+  { id: "prone", label: "Prone", checked: false },
+  { id: "restrained", label: "Restrained", checked: false },
+  { id: "stunned", label: "Stunned", checked: false },
+  { id: "unconscious", label: "Unconscious", checked: false },
+];
+
 export default function ConditionSelector({ options }: { options: string }) {
   // Initial state for checkboxes
   const [checkboxes, setCheckboxes] = useState<CheckboxOption[]>(
-    options === "gloomhaven" ? gloomhaveConditions : [],
+    options === "gloomhaven"
+      ? gloomhaveConditions
+      : options === "dnd"
+        ? dndConditions
+        : [],
   );
 
   // Function to handle checkbox change
@@ -64,7 +85,7 @@ export default function ConditionSelector({ options }: { options: string }) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <ul className="flex min-h-6 gap-1">
         {checkboxes
           .filter((checkbox) => checkbox.checked)
