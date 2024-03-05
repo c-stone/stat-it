@@ -31,8 +31,9 @@ import ConditionSelector from "./ConditionSelector";
 import XMark from "./icons/XMark";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import RemoveButton from "./RemoveButton";
 
-export default function WidgetsCard() {
+export default function WidgetsCard({ name }: { name: string }) {
   const [counters, setCounters] = useState<{ name: string }[]>([]);
   const [conditionSelectors, setConditionSelectors] = useState<string[]>([]);
   const [newCounterName, setNewCounterName] = useState<string>("");
@@ -61,31 +62,23 @@ export default function WidgetsCard() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Stonee</CardTitle>
+        <CardTitle>{name}</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        {counters.map((counter) => (
-          <div key={counter.name} className="flex justify-between gap-1">
-            <Counter name={counter.name} />
-            <Button
-              variant={"destructive"}
-              size={"icon"}
-              onClick={() => removeCounter(counter.name)}
-            >
-              <XMark />
-            </Button>
-          </div>
+        {counters.map((counter, i) => (
+          <Counter
+            key={counter.name + i}
+            name={counter.name}
+            onRemove={removeCounter}
+          />
         ))}
         {conditionSelectors.map((selector, i) => (
           <div key={`selector-${i}`} className="flex w-full items-end gap-1">
-            <ConditionSelector key={`selector-${i}`} options={selector} />
-            <Button
-              variant={"destructive"}
-              size={"icon"}
-              onClick={() => removeConditionSelector(selector)}
-            >
-              <XMark />
-            </Button>
+            <ConditionSelector
+              key={`selector-${i}`}
+              options={selector}
+              onRemove={() => removeConditionSelector(selector)}
+            />
           </div>
         ))}
       </CardContent>
@@ -122,7 +115,6 @@ export default function WidgetsCard() {
                   <Label htmlFor="condition-selector">Condition Selector</Label>
                   <Select
                     onValueChange={(value: string) => {
-                      console.log(value);
                       setNewConditionSelector(value);
                     }}
                   >
@@ -138,7 +130,6 @@ export default function WidgetsCard() {
                 </div>
                 <Button
                   onClick={() => {
-                    console.log(newConditionSelector);
                     addConditionSelector(newConditionSelector);
                   }}
                   disabled={!newConditionSelector}

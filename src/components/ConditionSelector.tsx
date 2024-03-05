@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import XMark from "./icons/XMark";
+import RemoveButton from "./RemoveButton";
 
 type Checked = DropdownMenuCheckboxItemProps["checked"];
 
@@ -56,7 +57,13 @@ const dndConditions: CheckboxOption[] = [
   { id: "unconscious", label: "Unconscious", checked: false },
 ];
 
-export default function ConditionSelector({ options }: { options: string }) {
+export default function ConditionSelector({
+  options,
+  onRemove,
+}: {
+  options: string;
+  onRemove: (arg: string) => void;
+}) {
   // Initial state for checkboxes
   const [checkboxes, setCheckboxes] = useState<CheckboxOption[]>(
     options === "gloomhaven"
@@ -85,38 +92,41 @@ export default function ConditionSelector({ options }: { options: string }) {
   };
 
   return (
-    <div className="flex w-full flex-col gap-2">
-      <ul className="flex min-h-6 gap-1">
-        {checkboxes
-          .filter((checkbox) => checkbox.checked)
-          .map((checkbox) => (
-            <li key={checkbox.id}>
-              <Badge className="flex gap-1">
-                {checkbox.label}{" "}
-                <button onClick={() => handleRemoveCondition(checkbox.id)}>
-                  <XMark />
-                </button>
-              </Badge>
-            </li>
-          ))}
-      </ul>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline">Conditions</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="h-56 w-56 overflow-scroll">
-          {checkboxes.map(({ id, label, checked, disabled }) => (
-            <DropdownMenuCheckboxItem
-              key={id}
-              checked={checked}
-              onCheckedChange={(checked) => handleCheckboxChange(id, checked)}
-              disabled={disabled}
-            >
-              {label}
-            </DropdownMenuCheckboxItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
+    <div className="flex w-full items-end justify-between gap-2">
+      <div className="flex w-full flex-col gap-2">
+        <ul className="flex min-h-6 gap-1">
+          {checkboxes
+            .filter((checkbox) => checkbox.checked)
+            .map((checkbox) => (
+              <li key={checkbox.id}>
+                <Badge className="flex gap-1">
+                  {checkbox.label}{" "}
+                  <button onClick={() => handleRemoveCondition(checkbox.id)}>
+                    <XMark />
+                  </button>
+                </Badge>
+              </li>
+            ))}
+        </ul>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Conditions</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="h-56 w-56 overflow-scroll">
+            {checkboxes.map(({ id, label, checked, disabled }) => (
+              <DropdownMenuCheckboxItem
+                key={id}
+                checked={checked}
+                onCheckedChange={(checked) => handleCheckboxChange(id, checked)}
+                disabled={disabled}
+              >
+                {label}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+      <RemoveButton name={options} onRemove={onRemove} />
     </div>
   );
 }
