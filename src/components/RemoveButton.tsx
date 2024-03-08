@@ -1,7 +1,7 @@
 import { Button } from "./ui/button";
-import XMark from "./icons/XMark";
+import { XMark } from "./icons/XMark";
 
-export default function RemoveButton({
+function RemoveButton({
   name,
   onRemove,
 }: {
@@ -18,3 +18,5 @@ export default function RemoveButton({
     </Button>
   );
 }
+
+export { RemoveButton };

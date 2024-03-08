@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "./ui/button";
-import RemoveButton from "./RemoveButton";
+import { RemoveButton } from "./RemoveButton";
 
 interface CounterProps {
   name: string;

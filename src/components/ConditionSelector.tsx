@@ -1,80 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import type { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
+import type { CheckboxOption, Checked } from "~/types/checkboxTypes";
+
 import { gloomhaveConditions, dndConditions } from "~/data/conditions";
 
 import { Button } from "~/components/ui/button";
-import { Badge } from "~/components/ui/badge";
+
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import XMark from "./icons/XMark";
-import RemoveButton from "./RemoveButton";
 
-type Checked = DropdownMenuCheckboxItemProps["checked"];
-
-type CheckboxOption = {
-  id: string;
-  label: string;
-  checked: Checked;
-  disabled?: boolean;
-};
-
-type BadgeListProps = {
-  checkboxes: CheckboxOption[];
-  onRemove: (id: string) => void;
-};
-
-type ConditionCheckboxListProps = {
-  checkboxes: CheckboxOption[];
-  onCheckboxChange: (id: string, checked: Checked) => void;
-  disabled: boolean;
-};
+import { RemoveButton } from "./RemoveButton";
+import { BadgeList } from "./BadgeList";
+import { CheckboxList } from "./CheckboxList";
 
 type ConditionSelectorProps = {
   options: string;
   onRemove: (arg: string) => void;
 };
-
-const BadgeList = ({ checkboxes, onRemove }: BadgeListProps) => (
-  <ul className="flex min-h-6 gap-1">
-    {checkboxes
-      .filter((checkbox: CheckboxOption) => checkbox.checked)
-      .map((checkbox: CheckboxOption) => (
-        <li key={checkbox.id}>
-          <Badge className="flex gap-1">
-            {checkbox.label}
-            <button onClick={() => onRemove(checkbox.id)}>
-              <XMark />
-            </button>
-          </Badge>
-        </li>
-      ))}
-  </ul>
-);
-
-const ConditionCheckboxList = ({
-  checkboxes,
-  onCheckboxChange,
-  disabled,
-}: ConditionCheckboxListProps) => (
-  <DropdownMenuContent className="h-56 w-56 overflow-scroll">
-    {checkboxes.map(({ id, label, checked }: CheckboxOption) => (
-      <DropdownMenuCheckboxItem
-        key={id}
-        checked={checked}
-        onCheckedChange={(checked: Checked) => onCheckboxChange(id, checked)}
-        disabled={disabled}
-      >
-        {label}
-      </DropdownMenuCheckboxItem>
-    ))}
-  </DropdownMenuContent>
-);
 
 export default function ConditionSelector({
   options,
@@ -108,7 +53,7 @@ export default function ConditionSelector({
           <DropdownMenuTrigger asChild>
             <Button variant="outline">Conditions</Button>
           </DropdownMenuTrigger>
-          <ConditionCheckboxList
+          <CheckboxList
             checkboxes={checkboxes}
             onCheckboxChange={handleCheckboxChange}
             disabled={false}
