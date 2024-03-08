@@ -28,12 +28,17 @@ import Plus from "./icons/Plus";
 
 import Counter from "./Counter";
 import ConditionSelector from "./ConditionSelector";
-import XMark from "./icons/XMark";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import RemoveButton from "./RemoveButton";
+import { XMark } from "./icons/XMark";
 
-export default function WidgetsCard({ name }: { name: string }) {
+const WidgetsCard = ({
+  name,
+  onRemove,
+}: {
+  name: string;
+  onRemove: (arg: string) => void;
+}) => {
   const [counters, setCounters] = useState<{ name: string }[]>([]);
   const [conditionSelectors, setConditionSelectors] = useState<string[]>([]);
   const [newCounterName, setNewCounterName] = useState<string>("");
@@ -83,6 +88,9 @@ export default function WidgetsCard({ name }: { name: string }) {
         ))}
       </CardContent>
       <CardFooter className="flex justify-end">
+        <Button variant={"destructive"} onClick={() => onRemove(name)}>
+          <XMark />
+        </Button>
         <Sheet>
           <SheetTrigger asChild>
             <Button>
@@ -143,4 +151,6 @@ export default function WidgetsCard({ name }: { name: string }) {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export { WidgetsCard };
