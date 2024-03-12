@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardFooter } from "~/components/ui/card";
 import {
   Sheet,
   SheetContent,
@@ -24,15 +18,23 @@ import {
 } from "~/components/ui/select";
 
 import { Button } from "./ui/button";
-import Plus from "./icons/Plus";
-
-import Counter from "./Counter";
-import ConditionSelector from "./ConditionSelector";
-import XMark from "./icons/XMark";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 
-export default function WidgetsCard() {
+import { Counter } from "./Counter";
+import { ConditionSelector } from "./ConditionSelector";
+import { EditableHeader } from "./EditableHeader";
+
+import { Plus } from "./icons/Plus";
+import { Trash } from "./icons/Trash";
+
+const WidgetsCard = ({
+  name,
+  onRemove,
+}: {
+  name: string;
+  onRemove: (arg: string) => void;
+}) => {
   const [counters, setCounters] = useState<{ name: string }[]>([]);
   const [conditionSelectors, setConditionSelectors] = useState<string[]>([]);
   const [newCounterName, setNewCounterName] = useState<string>("");
@@ -60,39 +62,36 @@ export default function WidgetsCard() {
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>Stonee</CardTitle>
-      </CardHeader>
+      <EditableHeader text={name} />
       <CardContent className="flex flex-col gap-4">
-        {counters.map((counter) => (
-          <div key={counter.name} className="flex justify-between gap-1">
-            <Counter name={counter.name} />
-            <Button
-              variant={"destructive"}
-              size={"icon"}
-              onClick={() => removeCounter(counter.name)}
-            >
-              <XMark />
-            </Button>
-          </div>
+        {counters.map((counter, i) => (
+          <Counter
+            key={counter.name + i}
+            name={counter.name}
+            onRemove={removeCounter}
+          />
         ))}
         {conditionSelectors.map((selector, i) => (
           <div key={`selector-${i}`} className="flex w-full items-end gap-1">
-            <ConditionSelector key={`selector-${i}`} options={selector} />
-            <Button
-              variant={"destructive"}
-              size={"icon"}
-              onClick={() => removeConditionSelector(selector)}
-            >
-              <XMark />
-            </Button>
+            <ConditionSelector
+              key={`selector-${i}`}
+              options={selector}
+              onRemove={() => removeConditionSelector(selector)}
+            />
           </div>
         ))}
       </CardContent>
-      <CardFooter className="flex justify-end">
+      <CardFooter className="flex justify-end gap-2">
+        <Button
+          variant={"destructive"}
+          size={"icon"}
+          onClick={() => onRemove(name)}
+        >
+          <Trash />
+        </Button>
         <Sheet>
           <SheetTrigger asChild>
-            <Button>
+            <Button size={"icon"}>
               <Plus />
             </Button>
           </SheetTrigger>
@@ -122,7 +121,6 @@ export default function WidgetsCard() {
                   <Label htmlFor="condition-selector">Condition Selector</Label>
                   <Select
                     onValueChange={(value: string) => {
-                      console.log(value);
                       setNewConditionSelector(value);
                     }}
                   >
@@ -138,7 +136,6 @@ export default function WidgetsCard() {
                 </div>
                 <Button
                   onClick={() => {
-                    console.log(newConditionSelector);
                     addConditionSelector(newConditionSelector);
                   }}
                   disabled={!newConditionSelector}
@@ -152,4 +149,6 @@ export default function WidgetsCard() {
       </CardFooter>
     </Card>
   );
-}
+};
+
+export { WidgetsCard };
