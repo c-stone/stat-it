@@ -38,7 +38,7 @@ const IncrementDecrementButtons = ({
   </div>
 );
 
-export default function Counter({ name, onRemove }: CounterProps) {
+const Counter = ({ name, onRemove }: CounterProps) => {
   const [count, setCount] = useState<number>(0);
 
   function onIncrement() {
@@ -62,4 +62,6 @@ export default function Counter({ name, onRemove }: CounterProps) {
       <RemoveButton name={name} onRemove={onRemove} />
     </div>
   );
-}
+};
+
+export { Counter };

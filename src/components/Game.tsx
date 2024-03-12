@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import { WidgetsCard } from "./WidgetsCard";
 import { Button } from "./ui/button";
-import Plus from "./icons/Plus";
+import { Plus } from "./icons/Plus";
 
 const Game = () => {
   const [widgetsCards, setWidgetsCards] = useState<{ name: string }[]>([]);
@@ -30,7 +30,7 @@ const Game = () => {
           onClick={() =>
             setWidgetsCards((current) => [
               ...current,
-              { name: `WidgetsCard ${current.length + 1}` },
+              { name: `Player ${current.length + 1}` },
             ])
           }
         >

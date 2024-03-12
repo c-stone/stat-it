@@ -21,10 +21,7 @@ type ConditionSelectorProps = {
   onRemove: (arg: string) => void;
 };
 
-export default function ConditionSelector({
-  options,
-  onRemove,
-}: ConditionSelectorProps) {
+const ConditionSelector = ({ options, onRemove }: ConditionSelectorProps) => {
   const [checkboxes, setCheckboxes] = useState<CheckboxOption[]>(
     options === "gloomhaven"
       ? gloomhaveConditions
@@ -63,4 +60,6 @@ export default function ConditionSelector({
       <RemoveButton name={options} onRemove={onRemove} />
     </div>
   );
-}
+};
+
+export { ConditionSelector };

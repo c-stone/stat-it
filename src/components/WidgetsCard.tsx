@@ -18,15 +18,16 @@ import {
 } from "~/components/ui/select";
 
 import { Button } from "./ui/button";
-import Plus from "./icons/Plus";
-
-import Counter from "./Counter";
-import ConditionSelector from "./ConditionSelector";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
-import { XMark } from "./icons/XMark";
 
+import { Counter } from "./Counter";
+import { ConditionSelector } from "./ConditionSelector";
 import { EditableHeader } from "./EditableHeader";
+
+import { XMark } from "./icons/XMark";
+import { Plus } from "./icons/Plus";
+import { Trash } from "./icons/Trash";
 
 const WidgetsCard = ({
   name,
@@ -81,13 +82,17 @@ const WidgetsCard = ({
           </div>
         ))}
       </CardContent>
-      <CardFooter className="flex justify-end">
-        <Button variant={"destructive"} onClick={() => onRemove(name)}>
-          <XMark />
+      <CardFooter className="flex justify-end gap-2">
+        <Button
+          variant={"destructive"}
+          size={"icon"}
+          onClick={() => onRemove(name)}
+        >
+          <Trash />
         </Button>
         <Sheet>
           <SheetTrigger asChild>
-            <Button>
+            <Button size={"icon"}>
               <Plus />
             </Button>
           </SheetTrigger>
