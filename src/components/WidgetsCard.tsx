@@ -25,7 +25,6 @@ import { Counter } from "./Counter";
 import { ConditionSelector } from "./ConditionSelector";
 import { EditableHeader } from "./EditableHeader";
 
-import { XMark } from "./icons/XMark";
 import { Plus } from "./icons/Plus";
 import { Trash } from "./icons/Trash";
 
