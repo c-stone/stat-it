@@ -9,17 +9,24 @@ import Plus from "./icons/Plus";
 const Game = () => {
   const [widgetsCards, setWidgetsCards] = useState<{ name: string }[]>([]);
 
-  function onRemove(name: string) {
+  function removeWidgetCardByName(name: string) {
     setWidgetsCards((current) => current.filter((card) => card.name !== name));
   }
 
   return (
-    <div className="grid w-3/4 grid-cols-2 gap-4">
-      {widgetsCards.map((card, index) => (
-        <WidgetsCard key={index} name={card.name} onRemove={onRemove} />
-      ))}
-      <div className="flex justify-end">
+    <>
+      <div className="flex h-full w-3/4 flex-col gap-4">
+        {widgetsCards.map((card, index) => (
+          <WidgetsCard
+            key={index}
+            name={card.name}
+            onRemove={removeWidgetCardByName}
+          />
+        ))}
+      </div>
+      <div className="mt-auto flex w-full justify-end">
         <Button
+          variant={"secondary"}
           onClick={() =>
             setWidgetsCards((current) => [
               ...current,
@@ -30,7 +37,7 @@ const Game = () => {
           <Plus />
         </Button>
       </div>
-    </div>
+    </>
   );
 };
 

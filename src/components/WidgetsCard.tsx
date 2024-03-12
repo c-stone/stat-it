@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardFooter } from "~/components/ui/card";
 import {
   Sheet,
   SheetContent,
@@ -31,6 +25,8 @@ import ConditionSelector from "./ConditionSelector";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { XMark } from "./icons/XMark";
+
+import { EditableHeader } from "./EditableHeader";
 
 const WidgetsCard = ({
   name,
@@ -66,9 +62,7 @@ const WidgetsCard = ({
 
   return (
     <Card className="w-full">
-      <CardHeader>
-        <CardTitle>{name}</CardTitle>
-      </CardHeader>
+      <EditableHeader text={name} />
       <CardContent className="flex flex-col gap-4">
         {counters.map((counter, i) => (
           <Counter
