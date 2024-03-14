@@ -13,9 +13,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Stat-it",
+  title: "Track-it",
   description:
-    "Discover Stat-it: the ultimate universal game companion tailored for all your tabletop RPG and board game needs. Enhance your gaming experience with customizable features for every game.",
+    "Discover Track-it: the ultimate universal game companion tailored for all your tabletop RPG and board game needs. Enhance your gaming experience with customizable features for every game.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -32,22 +32,6 @@ export default function RootLayout({
           <button>Account</button>
         </header>
         <div className="flex">
-          <nav className="min-w-60 px-5">
-            <ul>
-              <li>
-                <Link href="/">Home</Link>
-              </li>
-              <li>
-                <Link href="/presets">Presets</Link>
-              </li>
-              <li>
-                <Link href="/create-game">New Game</Link>
-              </li>
-              <li>
-                <Link href="/settings">Settings</Link>
-              </li>
-            </ul>
-          </nav>
           <div className="w-full">
             <div>{children}</div>
           </div>
@@ -56,4 +40,23 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+{
+  /* <nav className="min-w-60 px-5">
+  <ul>
+    <li>
+      <Link href="/">Home</Link>
+    </li>
+    <li>
+      <Link href="/presets">Presets</Link>
+    </li>
+    <li>
+      <Link href="/create-game">New Game</Link>
+    </li>
+    <li>
+      <Link href="/settings">Settings</Link>
+    </li>
+  </ul>
+</nav> */
 }

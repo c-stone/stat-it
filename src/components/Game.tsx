@@ -24,7 +24,7 @@ const Game = () => {
           />
         ))}
       </div>
-      <div className="mt-auto flex w-full justify-end">
+      <div className="mt-auto flex w-full justify-end pb-[40px]">
         <Button
           variant={"secondary"}
           onClick={() =>
