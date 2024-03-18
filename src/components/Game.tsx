@@ -18,7 +18,7 @@ const Game = () => {
       <div className="flex h-full w-3/4 flex-col gap-4">
         {widgetsCards.map((card, index) => (
           <WidgetsCard
-            key={index}
+            key={card.name}
             name={card.name}
             onRemove={removeWidgetCardByName}
           />
