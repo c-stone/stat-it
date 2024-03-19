@@ -22,18 +22,40 @@ export async function POST(
       // Check if the request was successful
       if (response.ok) {
         const data = await response.json();
-        return new Response({status: 200, data});
+        return new Response(JSON.stringify(data), {
+          status: 200,
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
       } else {
-        // Handle error responses from the backend
-        const errorData = await response.json()
-        return new Response({status: response.status, error: errorData.error || 'Error creating game'});
-      }
-    } catch (error) {
-      console.error('Error creating game:', error);
-      return new Response({status: 500, error: 'Internal Server Error' });
+          // Handle error responses from the backend
+          const errorData = await response.json();
+          const errorMessage = errorData.error || 'Error creating game';
+          return new Response(JSON.stringify({ error: errorMessage }), {
+              status: response.status,
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          });
+        }
+      } catch (error) {
+        // Handle internal server error
+        console.error('Error creating game:', error);
+        return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+            status: 500,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     }
-  } else {
-    // Handle other HTTP methods
-    return new Response({status: 405, error: 'Method not allowed' });
-  }
+   } else {
+      // Handle other HTTP methods
+      return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+          status: 405,
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+    }    
 }
