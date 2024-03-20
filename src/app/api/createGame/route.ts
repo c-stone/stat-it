@@ -1,23 +1,41 @@
+import { auth, currentUser } from "@clerk/nextjs";
+
+interface CreateGameRequest {
+  gameName: string;
+  gameID: string;
+}
+
+export const getCurrentUser = async () => {
+  const { userId } = auth();
+  if (userId) {
+    return await currentUser();
+  } else {
+    return null;
+  }
+};
+
 export async function POST(
   req: Request,
   res: Response
 ) {
   if (req.method === 'POST') {
-    const { searchParams } = new URL(req.url)
-    const gameID = searchParams.get('gameID')
+    const { gameName, gameID } = await req.json();
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      throw new Error('User is not authenticated.');
+    }
     try {
         
       // Make your API call to create the game here
       // For example:
-      const response = await fetch(`https://bxqbll87rl.execute-api.us-east-1.amazonaws.com/api/games?gameID=${gameID}&username=test`, {
+      const response = await fetch('https://bxqbll87rl.execute-api.us-east-1.amazonaws.com/api/games', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           // Add any required headers here
         },
+        body: JSON.stringify({ gameName, gameID, currentUser })
       });
-
-      console.log(response);
 
       // Check if the request was successful
       if (response.ok) {
