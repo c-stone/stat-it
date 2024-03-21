@@ -2,12 +2,11 @@ import "~/styles/globals.css";
 
 import { Inter } from "next/font/google";
 
-import Link from "next/link";
 import Image from "next/image";
 import { Toaster } from "~/components/ui/sonner";
 import logo from "../../public/images/logo.webp";
 
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from "@clerk/nextjs";
 import { UserButton } from "@clerk/nextjs";
 
 const inter = Inter({
@@ -29,20 +28,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-        <body className={`font-sans ${inter.variable}`}>
-          <ClerkProvider>
-            <header className="flex justify-between p-3">
-              <Image src={logo} alt="Company Logo" className="h-10 w-10" />
-              <UserButton />
-            </header>
-          </ClerkProvider>
-          <div className="flex">
-            <div className="w-full">
-              <div>{children}</div>
-            </div>
-            <Toaster />
+      <body className={`font-sans ${inter.variable}`}>
+        <ClerkProvider>
+          <header className="flex justify-between p-3">
+            <Image src={logo} alt="Company Logo" className="h-10 w-10" />
+            <UserButton />
+          </header>
+        </ClerkProvider>
+        <div className="flex">
+          <div className="w-full">
+            <div>{children}</div>
           </div>
-        </body>
+          <Toaster />
+        </div>
+      </body>
     </html>
   );
 }

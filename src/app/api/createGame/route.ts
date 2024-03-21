@@ -5,7 +5,7 @@ interface CreateGameRequest {
   gameID: string;
 }
 
-export const getCurrentUser = async () => {
+const getCurrentUser = async () => {
   const { userId } = auth();
   if (userId) {
     return await currentUser();
@@ -16,10 +16,10 @@ export const getCurrentUser = async () => {
 
 export async function POST(
   req: Request,
-  res: Response
 ) {
   if (req.method === 'POST') {
-    const { gameName, gameID } = await req.json();
+    const response = await req.json() as CreateGameRequest;
+    const { gameName, gameID } = response;
     const currentUser = await getCurrentUser();
     if (!currentUser) {
       throw new Error('User is not authenticated.');
@@ -39,7 +39,7 @@ export async function POST(
 
       // Check if the request was successful
       if (response.ok) {
-        const data = await response.json();
+        const data: unknown = await response.json();
         return new Response(JSON.stringify(data), {
           status: 200,
           headers: {
@@ -47,16 +47,16 @@ export async function POST(
           }
       });
       } else {
-          // Handle error responses from the backend
-          const errorData = await response.json();
-          const errorMessage = errorData.error || 'Error creating game';
-          return new Response(JSON.stringify({ error: errorMessage }), {
-              status: response.status,
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          });
-        }
+        // Handle error responses from the backend
+        const errorData: unknown = await response.json();
+        const errorMessage = (errorData as { error?: string }).error ?? 'Error creating game';
+        return new Response(JSON.stringify({ error: errorMessage }), {
+          status: response.status,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+      }
       } catch (error) {
         // Handle internal server error
         console.error('Error creating game:', error);
