@@ -1,17 +1,19 @@
 "use client";
 
-import { useState, ChangeEvent  } from "react";
+import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import CopyOnClickButton from "./ClipboardCopyButton";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+
+type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 export default function GameCreator() {
-  const [gameName, setGameName] = useState('');
+  const [gameName, setGameName] = useState("");
   const [gameID, setGameID] = useState(uuidv4());
-  
-  const handleGameNameChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+  const handleGameNameChange = (event: ChangeEvent) => {
     setGameName(event.target.value);
   };
 
@@ -20,21 +22,21 @@ export default function GameCreator() {
       const response = await fetch('/api/games', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ gameName, gameID }),
       });
 
       if (response.ok) {
         // Handle successful response
-        console.log('Game created successfully');
+        console.log("Game created successfully");
       } else {
         // Handle error response
-        console.error('Error creating game');
+        console.error("Error creating game");
       }
     } catch (error) {
       // Handle network error
-      console.error('Network error:', error);
+      console.error("Network error:", error);
     }
   };
 
