@@ -19,8 +19,8 @@ export default function GameCreator() {
 
   const handleCreateGame = async () => {
     try {
-      const response = await fetch("/api/createGame", {
-        method: "POST",
+      const response = await fetch('/api/games', {
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },

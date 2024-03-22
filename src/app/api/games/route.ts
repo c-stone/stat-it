@@ -45,7 +45,7 @@ export async function POST(
           headers: {
               'Content-Type': 'application/json'
           }
-      });
+        });
       } else {
         // Handle error responses from the backend
         const errorData: unknown = await response.json();
@@ -76,4 +76,62 @@ export async function POST(
           }
       });
     }    
+}
+
+export async function GET(req: Request, res: Response) {
+  if (req.method === 'GET') {
+    try {
+      const userObject = await getCurrentUser();
+      const currentUser = userObject?.id;
+
+      // Make a GET request to the external API to fetch games
+      const response = await fetch(`https://bxqbll87rl.execute-api.us-east-1.amazonaws.com/api/games?user=${currentUser}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+
+      // Check if the request was successful
+      if (response.ok) {
+        // Parse the JSON response
+        const games = await response.json();
+        // console.log(games);
+        // console.log(currentUser);
+        // Return the list of games as a JSON response
+        return new Response(JSON.stringify(games), {
+          status: 200,
+          headers: {
+              'Content-Type': 'application/json'
+          }
+        });
+      } else {
+        // Handle error responses from the external API
+        const errorData = await response.json();
+        const errorMessage = errorData.error || 'Error fetching games';
+        return new Response(JSON.stringify({ error: errorMessage }), {
+          status: response.status,
+          headers: {
+              'Content-Type': 'application/json'
+          }
+      });
+      }
+    } catch (error) {
+      console.error('Error fetching games:', error);
+      return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
+        status: 500,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    }
+  } else {
+    // Handle other HTTP methods
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      status: 405,
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  });
+  }
 }
