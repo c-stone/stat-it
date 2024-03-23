@@ -27,22 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
-        <ClerkProvider>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`font-sans ${inter.variable}`}>
           <header className="flex justify-between p-3">
             <Image src={logo} alt="Company Logo" className="h-10 w-10" />
             <UserButton />
           </header>
-        </ClerkProvider>
-        <div className="flex">
-          <div className="w-full">
-            <div>{children}</div>
+          <div className="flex">
+            <div className="w-full">
+              <div>{children}</div>
+            </div>
+            <Toaster />
           </div>
-          <Toaster />
-        </div>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
 
