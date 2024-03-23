@@ -1,15 +1,6 @@
-import { auth, currentUser } from "@clerk/nextjs";
+/* eslint-disable */
 
-export const getCurrentUser = async () => {
-  const { userId } = auth();
-  if (userId) {
-    return await currentUser();
-  } else {
-    return null;
-  }
-};
-
-export async function GET(req: Request, res: Response) {
+export async function GET(req: Request) {
   try {
     // Retrieve the current user
     // const userObject = await getCurrentUser();

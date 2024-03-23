@@ -1,17 +1,8 @@
-import { auth, currentUser } from "@clerk/nextjs";
-
-export const getCurrentUser = async () => {
-  const { userId } = auth();
-  if (userId) {
-    return await currentUser();
-  } else {
-    return null;
-  }
-};
+/* eslint-disable */
+import { getCurrentUser } from "../auth-utility";
 
 export async function POST(
   req: Request,
-  res: Response
 ) {
   if (req.method === 'POST') {
     const { gameName, gameID } = await req.json();
@@ -73,7 +64,7 @@ export async function POST(
     }    
 }
 
-export async function GET(req: Request, res: Response) {
+export async function GET(req: Request) {
   if (req.method === 'GET') {
     try {
       const userObject = await getCurrentUser();
