@@ -1,39 +1,69 @@
-"use client";
+import React, { useState, useEffect } from 'react';
+import { WidgetsCard } from './WidgetsCard';
+import { Button } from './ui/button';
+import { Plus } from './icons/Plus';
+import { GameInfo } from './Interfaces'; // Import the Module interface
 
-import { useState } from "react";
+const Game = ({ gameInfo }: { gameInfo: GameInfo }) => { // Change GameInfo[] to GameInfo
+  const [widgetsCards, setWidgetsCards] = useState<GameInfo[]>([]);
 
-import { WidgetsCard } from "./WidgetsCard";
-import { Button } from "./ui/button";
-import { Plus } from "./icons/Plus";
+  useEffect(() => {
+    // Initialize widget cards with the gameInfo when the component mounts
+    if (gameInfo) {
+      setWidgetsCards([gameInfo]); // Wrap the single gameInfo object in an array
+    }
+  }, [gameInfo]);
 
-const Game = () => {
-  const [widgetsCards, setWidgetsCards] = useState<{ name: string }[]>([]);
+  async function createWidgetCard() {
+    try {
+      const response = await fetch('/api/create-widget-card', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `Player ${widgetsCards.length + 1}`,
+          components: [],
+        }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to create widget card');
+      }
+      const data = await response.json();
+      setWidgetsCards((current) => [...current, data]);
+    } catch (error) {
+      console.error('Error creating widget card:', error);
+    }
+  }
 
   function removeWidgetCardByName(name: string) {
-    setWidgetsCards((current) => current.filter((card) => card.name !== name));
+    setWidgetsCards((current) =>
+      current.map((info) => ({
+        ...info,
+        modules: info.modules.filter((module) => module.name !== name),
+      }))
+    );
   }
+  
 
   return (
     <>
       <div className="flex h-full w-3/4 flex-col gap-4">
         {widgetsCards.map((card, index) => (
-          <WidgetsCard
-            key={index}
-            name={card.name}
-            onRemove={removeWidgetCardByName}
-          />
+          <React.Fragment key={index}>
+            {card.modules.map((module, moduleIndex) => (
+              <WidgetsCard
+                key={moduleIndex}
+                name={module.name}
+                components={module.components}
+                onRemove={() => removeWidgetCardByName(module.name)}
+              />
+            ))}
+          </React.Fragment>
         ))}
       </div>
       <div className="mt-auto flex w-full justify-end pb-[40px]">
-        <Button
-          variant={"secondary"}
-          onClick={() =>
-            setWidgetsCards((current) => [
-              ...current,
-              { name: `Player ${current.length + 1}` },
-            ])
-          }
-        >
+        <Button variant="secondary" onClick={createWidgetCard}>
           <Plus />
         </Button>
       </div>
