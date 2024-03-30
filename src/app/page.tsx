@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 interface Game {
-  pk: { S: string };
-  sk: { S: string };
-  gameName: { S: string };
+  pk: string;
+  sk: string ;
+  gameName: string;
 }
 
 export default function HomePage() {
@@ -34,10 +34,10 @@ export default function HomePage() {
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
         {games.map((game, index) => (
-            <Link href={`/game/${game.sk.S}`} key={index}>
+            <Link href={`/game/${game.sk}`} key={index}>
               <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
-                <h3 className="text-2xl font-bold">{game.gameName.S}</h3>
-                <p>Game ID: {game.sk.S}</p>
+                <h3 className="text-2xl font-bold">{game.gameName}</h3>
+                <p>Game ID: {game.sk}</p>
               </div>
             </Link>
           ))}
