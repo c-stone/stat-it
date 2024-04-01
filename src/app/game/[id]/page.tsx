@@ -1,12 +1,8 @@
-/* eslint-disable */
 "use client";
 
 import { useEffect, useState } from 'react';
 import { Game } from "~/components/Game";
-
-interface GameInfo {
-  gameName: string;
-}
+import { GameInfo } from "~/components/Interfaces";
 
 export default function GamePage({ params }: { params: { id: string } }) {
   const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
@@ -30,7 +26,7 @@ export default function GamePage({ params }: { params: { id: string } }) {
   return (
     <main className="flex min-h-screen flex-col items-center bg-gradient-to-b from-[#2e026d] to-[#15162c] p-10 text-white">
       {gameInfo ? <h1>{gameInfo.gameName}</h1> : <h1>Loading...</h1>}
-      <Game />
+      {gameInfo ? <Game gameInfo={gameInfo} /> : null}
     </main>
   );
 }

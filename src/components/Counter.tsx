@@ -6,6 +6,7 @@ import { RemoveButton } from "./RemoveButton";
 
 interface CounterProps {
   name: string;
+  value: number;
   onRemove: (arg: string) => void;
 }
 
@@ -38,8 +39,8 @@ const IncrementDecrementButtons = ({
   </div>
 );
 
-const Counter = ({ name, onRemove }: CounterProps) => {
-  const [count, setCount] = useState<number>(0);
+const Counter = ({ name, value, onRemove }: CounterProps) => {
+  const [count, setCount] = useState<number>(value);
 
   function onIncrement() {
     setCount((prevCount) => prevCount + 1);
